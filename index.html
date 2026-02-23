@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <tittle>Protofilo</tittle>
+    <style>
+      li{
+        border: solid 2px red;
+        border-radius: 10px;
+        color: magenta;
+      }
+    </style>
+  </head>
+  <body>
+    Sanjayakhatri
+    <h2>Welcome to My Protofilo</h2>
+    <ol>
+      <li>My name is Sanjaya Khatri.</li>
+      <li>I am 16 years old.</li>
+      <li>I read in grade 11</li>
+      <li>I am learning some Language</li>
+    </ol>
+    <script>
+      let count = 0;
+      function open(){
+      const body = document.querySelector("body");
+        if(count === 0){
+          count = 1;
+          body.style.background-color="azure";
+          body.style.color="limegreen";
+      }
+        else if(count ===1){
+          count = 2;
+          body.style.background-color="aliceblue";
+          body.style.color="magenta";
+            }
+        else{
+          count = 0;
+          body.style.background-color="";
+          body.style.color="";
+        }
+          
+        
+    </script>
+  </body>
+</html>
