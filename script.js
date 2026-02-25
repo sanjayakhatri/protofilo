@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const playlist = [
     "https://image2url.com/r2/default/audio/1771983188136-f94a1ca5-f9cf-4aa2-9e3c-3dd919949c4e.mp3",
-    "music2.mp3",
+    "https://image2url.com/r2/default/audio/1771985605073-0c5efb82-006f-4dd9-b317-1d23636e37bf.mp3",
     "music3.mp3"
   ];
 
