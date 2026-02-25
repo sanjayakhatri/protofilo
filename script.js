@@ -1,19 +1,20 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-  // ===== THEME SYSTEM =====
-  let themeIndex = 0;
+  // ===== DYNAMIC THEMES =====
   const body = document.body;
   const list = document.querySelectorAll("li");
   const profile = document.querySelector(".profile-pic");
   const themeBtn = document.getElementById("themeBtn");
 
   const themes = [
-    {bg:"black", text:"lime", border:"lime"},
-    {bg:"navy", text:"white", border:"yellow"},
-    {bg:"purple", text:"gold", border:"gold"},
-    {bg:"darkgreen", text:"white", border:"white"},
-    {bg:"white", text:"black", border:"red"}
+    {bg:"#ffb347", text:"#333", border:"#ff6347"},  // soft orange
+    {bg:"#87cefa", text:"#000", border:"#1e90ff"},  // sky blue
+    {bg:"#dda0dd", text:"#000", border:"#8b008b"},  // plum
+    {bg:"#98fb98", text:"#000", border:"#32cd32"},  // light green
+    {bg:"#ffe4e1", text:"#000", border:"#ff69b4"},  // misty rose
   ];
+
+  let themeIndex = 0;
 
   themeBtn.addEventListener("click", function(){
     themeIndex++;
@@ -28,28 +29,40 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // ===== MUSIC PLAYLIST =====
   const playlist = [
-    "https://image2url.com/r2/default/audio/1771985605073-0c5efb82-006f-4dd9-b317-1d23636e37bf.mp3",
-    "https://image2url.com/r2/default/audio/1771983188136-f94a1ca5-f9cf-4aa2-9e3c-3dd919949c4e.mp3"
+    {
+      name:"Song 1-->Powfu:dead_bed",
+      url:"https://image2url.com/r2/default/audio/1771985605073-0c5efb82-006f-4dd9-b317-1d23636e37bf.mp3"
+    },
+    {
+      name:"Song 2",
+      url:"https://image2url.com/r2/default/audio/1771983188136-f94a1ca5-f9cf-4aa2-9e3c-3dd919949c4e.mp3"
+    }
   ];
 
   let songIndex = 0;
+
+  // Select buttons & UI
   const playBtn = document.getElementById("playBtn");
   const nextBtn = document.getElementById("nextBtn");
   const prevBtn = document.getElementById("prevBtn");
+  const songName = document.getElementById("songName");
+  const progressBar = document.getElementById("progressBar");
 
-  const music = new Audio(playlist[songIndex]);
-  music.loop = false;
+  // Create audio object
+  let music = new Audio(playlist[songIndex].url);
   music.volume = 0.4;
 
   function loadSong(index){
+    // Pause current song
     music.pause();
-    music.src = playlist[index];
+    music.src = playlist[index].url;
     music.currentTime = 0;
     music.play();
     playBtn.textContent = "⏸ Pause";
+    songName.textContent = "🎵 " + playlist[index].name;
   }
 
-  // ▶ Play / Pause
+  // PLAY / PAUSE
   playBtn.addEventListener("click", function(){
     if(music.paused){
       music.play();
@@ -60,29 +73,33 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   });
 
-  // ⏭ Next
+  // NEXT SONG
   nextBtn.addEventListener("click", function(){
     songIndex++;
     if(songIndex >= playlist.length) songIndex = 0;
     loadSong(songIndex);
   });
 
-  // ⏮ Previous
+  // PREVIOUS SONG
   prevBtn.addEventListener("click", function(){
     songIndex--;
     if(songIndex < 0) songIndex = playlist.length - 1;
     loadSong(songIndex);
   });
 
-  // Auto next
+  // AUTO NEXT WHEN SONG ENDS
   music.addEventListener("ended", function(){
     songIndex++;
     if(songIndex >= playlist.length) songIndex = 0;
     loadSong(songIndex);
   });
 
-});    loadSong(songIndex);
-
+  // UPDATE PROGRESS BAR
+  music.addEventListener("timeupdate", function(){
+    if(music.duration){
+      const progressPercent = (music.currentTime / music.duration) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
   });
 
 });
