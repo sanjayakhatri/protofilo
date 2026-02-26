@@ -1,3 +1,4 @@
+/* ================= BODY ================= */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -87,8 +88,19 @@ li{
   transition: all 0.6s ease;
 }
 
-/* ===================== RESPONSIVE MEDIA QUERIES ===================== */
+/* ================= LINE-BY-LINE ANIMATION ================= */
+.animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
 
+.animate.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================== RESPONSIVE MEDIA QUERIES ===================== */
 /* Tablets */
 @media screen and (max-width: 992px) {
   .card{
