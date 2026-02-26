@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", function(){
-  
-  // ===== DYNAMIC THEMES =====
+
+  // ================= LINE-BY-LINE ANIMATION =================
+  const animatedElements = document.querySelectorAll(".animate");
+  animatedElements.forEach((el, index) => {
+    setTimeout(() => {
+      el.classList.add("show");
+    }, index * 300);
+  });
+
+  // ================= DYNAMIC THEMES =================
   const body = document.body;
   const list = document.querySelectorAll("li");
   const profile = document.querySelector(".profile-pic");
@@ -11,10 +19,17 @@ document.addEventListener("DOMContentLoaded", function(){
     {bg:"#87cefa", text:"#000", border:"#1e90ff"},  // sky blue
     {bg:"#dda0dd", text:"#000", border:"#8b008b"},  // plum
     {bg:"#98fb98", text:"#000", border:"#32cd32"},  // light green
-    {bg:"#ffe4e1", text:"#000", border:"#ff69b4"},  // misty rose
+    {bg:"#ffe4e1", text:"#000", border:"#ff69b4"}   // misty rose
   ];
 
   let themeIndex = 0;
+
+  // Default theme on load
+  const defaultTheme = themes[themeIndex];
+  body.style.backgroundColor = defaultTheme.bg;
+  body.style.color = defaultTheme.text;
+  list.forEach(li => li.style.borderColor = defaultTheme.border);
+  profile.style.borderColor = defaultTheme.border;
 
   themeBtn.addEventListener("click", function(){
     themeIndex++;
@@ -26,34 +41,29 @@ document.addEventListener("DOMContentLoaded", function(){
     profile.style.borderColor = current.border;
   });
 
-
-  // ===== MUSIC PLAYLIST =====
+  // ================= MUSIC CONTROLS =================
   const playlist = [
     {
-      name:"Song 1-->Powfu:dead_bed",
+      name:"Powfu: dead-bed",
       url:"https://image2url.com/r2/default/audio/1771985605073-0c5efb82-006f-4dd9-b317-1d23636e37bf.mp3"
     },
     {
-      name:"Song 2",
+      name:"Powfu: another-song",
       url:"https://image2url.com/r2/default/audio/1771983188136-f94a1ca5-f9cf-4aa2-9e3c-3dd919949c4e.mp3"
     }
   ];
 
   let songIndex = 0;
+  let music = new Audio(playlist[songIndex].url);
+  music.volume = 0.4;
 
-  // Select buttons & UI
   const playBtn = document.getElementById("playBtn");
   const nextBtn = document.getElementById("nextBtn");
   const prevBtn = document.getElementById("prevBtn");
   const songName = document.getElementById("songName");
   const progressBar = document.getElementById("progressBar");
 
-  // Create audio object
-  let music = new Audio(playlist[songIndex].url);
-  music.volume = 0.4;
-
   function loadSong(index){
-    // Pause current song
     music.pause();
     music.src = playlist[index].url;
     music.currentTime = 0;
@@ -62,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function(){
     songName.textContent = "🎵 " + playlist[index].name;
   }
 
-  // PLAY / PAUSE
   playBtn.addEventListener("click", function(){
     if(music.paused){
       music.play();
@@ -73,28 +82,24 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   });
 
-  // NEXT SONG
   nextBtn.addEventListener("click", function(){
     songIndex++;
     if(songIndex >= playlist.length) songIndex = 0;
     loadSong(songIndex);
   });
 
-  // PREVIOUS SONG
   prevBtn.addEventListener("click", function(){
     songIndex--;
     if(songIndex < 0) songIndex = playlist.length - 1;
     loadSong(songIndex);
   });
 
-  // AUTO NEXT WHEN SONG ENDS
   music.addEventListener("ended", function(){
     songIndex++;
     if(songIndex >= playlist.length) songIndex = 0;
     loadSong(songIndex);
   });
 
-  // UPDATE PROGRESS BAR
   music.addEventListener("timeupdate", function(){
     if(music.duration){
       const progressPercent = (music.currentTime / music.duration) * 100;
