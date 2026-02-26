@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
-
+document.getElementById("year").textContent = new Date().getFullYear();
+  
   // ===== DYNAMIC THEMES =====
   const body = document.body;
   const list = document.querySelectorAll("li");
